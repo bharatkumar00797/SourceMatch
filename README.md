@@ -23,6 +23,14 @@ Manual verification is slow and error-prone. SourceMatch automates this process.
 
 ---
 
+## Current Status
+
+**Day 1 Complete** — Multi-PDF OCR Engine is ready.
+
+You can already run OCR on a full folder of scanned PDFs and save clean text files.
+
+---
+
 ## What SourceMatch Does
 
 1. Accepts multiple original scanned PDFs (source of truth)
@@ -35,28 +43,6 @@ Manual verification is slow and error-prone. SourceMatch automates this process.
 
 ---
 
-## Key Features
-
-- Multi-PDF OCR support
-- Numerical data extraction and comparison
-- Match Rate / Accuracy calculation
-- Missing & Extra values detection
-- Clean Excel and text reports
-- Designed for real institutional documents
-
----
-
-## Tech Stack
-
-- Python 3.12+
-- `pdfplumber` — text extraction from clean PDFs
-- `pdf2image` + Tesseract OCR — scanned document processing
-- `openpyxl` — Excel report generation
-- `python-docx` — optional Word reports
-- Streamlit (planned) — simple web interface
-
----
-
 ## Project Structure
 
 ```
@@ -65,49 +51,73 @@ SourceMatch/
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
+├── docs/
+│   └── development_plan.md
 ├── src/
 │   ├── __init__.py
-│   ├── ocr_engine.py
-│   ├── extractor.py
-│   ├── comparator.py
-│   ├── reporter.py
-│   └── main.py
-├── app/                  # Streamlit interface (Day 6-8)
-├── reports/               # Generated output
-└── sample_data/           # Optional sample files
+│   ├── ocr_engine.py      ← Day 1 (ready)
+│   ├── main.py
+│   ├── extractor.py      ← Day 2
+│   ├── comparator.py     ← Day 3
+│   └── reporter.py       ← Day 4
+├── app/                  ← Streamlit UI (Day 6-7)
+└── reports/
 ```
 
 ---
 
-## 8-Day Development Plan
-
-| Day | Focus |
-|-----|-------|
-| 1 | Project setup + OCR pipeline for multiple PDFs |
-| 2 | Numerical data extraction engine |
-| 3 | Core comparison logic (match / missing / extra) |
-| 4 | Accuracy calculation + detailed reporting |
-| 5 | End-to-end CLI tool |
-| 6 | Streamlit web interface (basic) |
-| 7 | Polish reports + UI improvements |
-| 8 | Documentation, final testing, GitHub polish |
-
----
-
-## Quick Start (Coming Soon)
+## Setup
 
 ```bash
 git clone https://github.com/bharatkumar00797/SourceMatch.git
 cd SourceMatch
 pip install -r requirements.txt
-python src/main.py
+```
+
+### System Dependencies
+
+1. **Tesseract OCR**  
+   Download: https://github.com/UB-Mannheim/tesseract/wiki
+
+2. **Poppler** (for pdf2image)  
+   Windows builds are available on GitHub.
+
+After installing, open `src/main.py` or `src/ocr_engine.py` and update these two paths:
+
+```python
+TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+POPPLER_PATH   = r"C:\poppler\Library\bin"
 ```
 
 ---
 
-## Status
+## Usage (Day 1)
 
-Currently under active development (8-day build cycle).
+```bash
+cd src
+python main.py
+```
+
+This will:
+- Scan the source folder for PDFs
+- Run OCR on each file
+- Save individual `.txt` files
+- Skip files that were already processed
+
+---
+
+## 8-Day Plan
+
+| Day | Focus | Status |
+|-----|-------|--------|
+| 1 | Multi-PDF OCR Engine | ✅ Complete |
+| 2 | Numerical Data Extraction | Upcoming |
+| 3 | Comparison Engine | Upcoming |
+| 4 | Accuracy + Reporting | Upcoming |
+| 5 | Complete CLI Tool | Upcoming |
+| 6 | Streamlit Web Interface | Upcoming |
+| 7 | Polish & Improvements | Upcoming |
+| 8 | Final Documentation | Upcoming |
 
 ---
 
