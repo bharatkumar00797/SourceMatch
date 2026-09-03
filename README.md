@@ -17,7 +17,7 @@ It is built for analysts, auditors, researchers, and organizations that work wit
 | 1 | Multi-PDF OCR Engine | ✅ Complete |
 | 2 | Numerical Data Extraction | ✅ Complete |
 | 3 | Comparison Engine | ✅ Complete |
-| 4 | Accuracy + Reporting | Upcoming |
+| 4 | Professional Reporting | ✅ Complete |
 | 5 | Complete CLI Tool | Upcoming |
 | 6–7 | Streamlit Web Interface | Upcoming |
 | 8 | Final Documentation | Upcoming |
@@ -33,7 +33,7 @@ Organizations often maintain compiled datasets created from original scanned doc
 - What extra values were introduced?
 - What is the overall match rate?
 
-SourceMatch automates this verification.
+SourceMatch automates this verification and produces professional audit reports.
 
 ---
 
@@ -45,7 +45,7 @@ SourceMatch automates this verification.
 4. Extracts and normalizes numerical data
 5. Calculates Match Rate and Accuracy
 6. Identifies missing and extra values
-7. Generates clear audit reports
+7. Generates professional Excel + text audit reports
 
 ---
 
@@ -58,8 +58,8 @@ SourceMatch/
 │   ├── ocr_engine.py      ✅ Day 1
 │   ├── extractor.py       ✅ Day 2
 │   ├── comparator.py      ✅ Day 3
-│   ├── main.py
-│   └── reporter.py        ← Day 4
+│   ├── reporter.py        ✅ Day 4
+│   └── main.py
 ├── app/                   ← Streamlit (Day 6-7)
 └── docs/
 ```
@@ -85,21 +85,35 @@ TARGET_PDF     = r"path\to\compiled\file.pdf"
 
 ---
 
-## Usage (Current — Day 3)
+## Usage (Current — Day 4)
 
 ```bash
 cd src
 python main.py
 ```
 
-This runs the full pipeline:
+This runs the complete pipeline:
 
 1. OCR all source PDFs
 2. Extract numbers from source documents
 3. Extract numbers from the target compiled file
-4. Compare both sets
-5. Display Match Rate / Accuracy
-6. Save a summary report
+4. Compare both sets and calculate accuracy
+5. Generate professional Excel + text audit reports
+
+---
+
+## Report Output
+
+The tool generates two reports inside the `reports` folder:
+
+- **SourceMatch_Audit_Report.xlsx**
+  - Summary sheet with accuracy highlight
+  - Missing Numbers sheet
+  - Extra Numbers sheet
+  - Matched Numbers sheet
+
+- **SourceMatch_Audit_Report.txt**
+  - Clean readable text version of the same audit
 
 ---
 
@@ -108,17 +122,6 @@ This runs the full pipeline:
 ```
 Match Rate = (Matched Numbers / Total Unique Numbers in Source) × 100
 ```
-
----
-
-## Day 3 Highlights
-
-The new `Comparator` class provides:
-
-- Clean separation of matched / missing / extra numbers
-- Precise match rate calculation
-- Structured `ComparisonResult` object
-- Ready for advanced reporting (Day 4)
 
 ---
 
