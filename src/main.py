@@ -1,6 +1,11 @@
 """
 SourceMatch - Main Entry Point
-Day 4: OCR → Extraction → Comparison → Professional Reporting
+
+For the professional command-line interface, use:
+    python cli.py --source <folder> --target <file>
+
+This file remains as a simple quick-start option with hard-coded paths
+for local testing.
 """
 
 import os
@@ -13,7 +18,6 @@ import pdfplumber
 
 
 def extract_text_from_pdf(pdf_path: str) -> str:
-    """Extract text from a clean (non-scanned) PDF using pdfplumber."""
     pages = []
     with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages:
@@ -30,16 +34,8 @@ def run_full_pipeline(
     tesseract_path: str = None,
     poppler_path: str = None
 ):
-    """
-    Full SourceMatch pipeline (Day 4):
-    1. OCR source PDFs
-    2. Extract numbers from source
-    3. Extract numbers from target
-    4. Compare
-    5. Generate professional Excel + text reports
-    """
     print("=" * 70)
-    print("SourceMatch — Full Audit Pipeline (Day 4)")
+    print("SourceMatch — Full Audit Pipeline")
     print("=" * 70)
     print(f"Start time    : {datetime.now().strftime('%d %B %Y, %I:%M %p')}")
     print(f"Source folder : {source_folder}")
@@ -50,7 +46,6 @@ def run_full_pipeline(
     reports_dir = os.path.join(output_dir, "reports")
     os.makedirs(reports_dir, exist_ok=True)
 
-    # ---------- Stage 1: OCR ----------
     print("STAGE 1: OCR on original source PDFs")
     print("-" * 70)
     engine = OCREngine(
@@ -64,17 +59,14 @@ def run_full_pipeline(
         print("No source documents processed. Exiting.")
         return
 
-    # ---------- Stage 2: Extract from source ----------
     print("\nSTAGE 2: Extracting numbers from source documents")
     print("-" * 70)
     extractor = NumberExtractor(min_value=1)
     source_numbers = extractor.get_all_unique(ocr_results)
     print(f"Unique numbers found in source PDFs: {len(source_numbers):,}")
 
-    # ---------- Stage 3: Extract from target ----------
     print("\nSTAGE 3: Extracting numbers from target (compiled) file")
     print("-" * 70)
-
     if not os.path.exists(target_pdf):
         print(f"ERROR: Target file not found → {target_pdf}")
         return
@@ -83,10 +75,8 @@ def run_full_pipeline(
     target_numbers = extractor.extract_unique(target_text)
     print(f"Unique numbers found in target file: {len(target_numbers):,}")
 
-    # ---------- Stage 4: Compare ----------
     print("\nSTAGE 4: Comparing source vs target")
     print("-" * 70)
-
     comparator = Comparator()
     result = comparator.compare_and_report(
         source_numbers,
@@ -94,10 +84,8 @@ def run_full_pipeline(
         title="SourceMatch — Accuracy Report"
     )
 
-    # ---------- Stage 5: Generate Reports ----------
     print("\nSTAGE 5: Generating professional audit reports")
     print("-" * 70)
-
     reporter = Reporter(output_dir=reports_dir)
     paths = reporter.generate_all(
         result,
@@ -117,6 +105,9 @@ def run_full_pipeline(
 
 
 if __name__ == "__main__":
+    print("Note: For the professional CLI, use:  python cli.py --help")
+    print("Running with hard-coded paths for quick local testing...\n")
+
     # ========== CONFIGURE THESE PATHS ==========
     TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
     POPPLER_PATH = r"C:\poppler\Library\bin"

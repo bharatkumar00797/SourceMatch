@@ -2,11 +2,11 @@
 
 **Verify the accuracy of compiled data against original scanned documents.**
 
-SourceMatch is an open-source tool designed to answer one critical question:
+SourceMatch is an open-source tool that answers one critical question:
 
 > How accurately does a compiled Excel or PDF reflect the original source documents?
 
-It is built for analysts, auditors, researchers, and organizations that work with scanned institutional reports.
+Built for analysts, auditors, researchers, and organizations working with scanned institutional reports.
 
 ---
 
@@ -18,34 +18,21 @@ It is built for analysts, auditors, researchers, and organizations that work wit
 | 2 | Numerical Data Extraction | ✅ Complete |
 | 3 | Comparison Engine | ✅ Complete |
 | 4 | Professional Reporting | ✅ Complete |
-| 5 | Complete CLI Tool | Upcoming |
+| 5 | Command-Line Interface | ✅ Complete |
 | 6–7 | Streamlit Web Interface | Upcoming |
 | 8 | Final Documentation | Upcoming |
 
 ---
 
-## The Problem
+## Features
 
-Organizations often maintain compiled datasets created from original scanned documents. It is difficult to know:
-
-- How much of the original data is present in the compiled version?
-- Which numbers are missing?
-- What extra values were introduced?
-- What is the overall match rate?
-
-SourceMatch automates this verification and produces professional audit reports.
-
----
-
-## What It Does
-
-1. Accepts multiple original scanned PDFs
-2. Accepts one compiled Excel or PDF file
-3. Performs OCR on scanned documents
-4. Extracts and normalizes numerical data
-5. Calculates Match Rate and Accuracy
-6. Identifies missing and extra values
-7. Generates professional Excel + text audit reports
+- OCR multiple scanned PDFs
+- Extract and normalize numerical data
+- Compare source documents against a compiled file
+- Calculate Match Rate / Accuracy
+- Identify missing and extra values
+- Generate professional Excel + text audit reports
+- Clean command-line interface
 
 ---
 
@@ -55,11 +42,12 @@ SourceMatch automates this verification and produces professional audit reports.
 SourceMatch/
 │
 ├── src/
-│   ├── ocr_engine.py      ✅ Day 1
-│   ├── extractor.py       ✅ Day 2
-│   ├── comparator.py      ✅ Day 3
-│   ├── reporter.py        ✅ Day 4
-│   └── main.py
+│   ├── ocr_engine.py      ✅
+│   ├── extractor.py       ✅
+│   ├── comparator.py      ✅
+│   ├── reporter.py        ✅
+│   ├── cli.py             ✅ Day 5
+│   └── main.py            (quick local testing)
 ├── app/                   ← Streamlit (Day 6-7)
 └── docs/
 ```
@@ -74,46 +62,62 @@ cd SourceMatch
 pip install -r requirements.txt
 ```
 
-Update paths in `src/main.py`:
+### System Dependencies
 
-```python
-TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-POPPLER_PATH   = r"C:\poppler\Library\bin"
-SOURCE_FOLDER  = r"path\to\original\pdfs"
-TARGET_PDF     = r"path\to\compiled\file.pdf"
-```
+- **Tesseract OCR** → https://github.com/UB-Mannheim/tesseract/wiki
+- **Poppler** (required by pdf2image on Windows)
 
 ---
 
-## Usage (Current — Day 4)
+## Usage
+
+### Professional CLI (Recommended)
 
 ```bash
 cd src
-python main.py
+
+python cli.py --source "path/to/original_pdfs" --target "path/to/compiled.pdf"
 ```
 
-This runs the complete pipeline:
+#### Full options
 
-1. OCR all source PDFs
-2. Extract numbers from source documents
-3. Extract numbers from the target compiled file
-4. Compare both sets and calculate accuracy
-5. Generate professional Excel + text audit reports
+```bash
+python cli.py \
+  --source "./original_reports" \
+  --target "./compiled_data.pdf" \
+  --output "./audit_output" \
+  --tesseract "C:\Program Files\Tesseract-OCR\tesseract.exe" \
+  --poppler "C:\poppler\Library\bin" \
+  --dpi 200 \
+  --min-value 1
+```
+
+#### View help
+
+```bash
+python cli.py --help
+```
+
+### Quick local testing
+
+```bash
+python main.py
+```
+(Uses hard-coded paths — edit the file to change them.)
 
 ---
 
-## Report Output
+## Output
 
-The tool generates two reports inside the `reports` folder:
+After a successful run you will get:
 
-- **SourceMatch_Audit_Report.xlsx**
-  - Summary sheet with accuracy highlight
-  - Missing Numbers sheet
-  - Extra Numbers sheet
-  - Matched Numbers sheet
-
-- **SourceMatch_Audit_Report.txt**
-  - Clean readable text version of the same audit
+- OCR text files for each source PDF
+- `reports/SourceMatch_Audit_Report.xlsx`
+  - Summary sheet with accuracy
+  - Missing Numbers
+  - Extra Numbers
+  - Matched Numbers
+- `reports/SourceMatch_Audit_Report.txt`
 
 ---
 
