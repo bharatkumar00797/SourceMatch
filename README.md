@@ -19,7 +19,8 @@ Built for analysts, auditors, researchers, and organizations working with scanne
 | 3 | Comparison Engine | ✅ Complete |
 | 4 | Professional Reporting | ✅ Complete |
 | 5 | Command-Line Interface | ✅ Complete |
-| 6–7 | Streamlit Web Interface | Upcoming |
+| 6 | Streamlit Web Interface | ✅ Complete (Basic) |
+| 7 | UI Polish & Improvements | Upcoming |
 | 8 | Final Documentation | Upcoming |
 
 ---
@@ -33,6 +34,7 @@ Built for analysts, auditors, researchers, and organizations working with scanne
 - Identify missing and extra values
 - Generate professional Excel + text audit reports
 - Clean command-line interface
+- **Web interface** (Streamlit)
 
 ---
 
@@ -42,13 +44,14 @@ Built for analysts, auditors, researchers, and organizations working with scanne
 SourceMatch/
 │
 ├── src/
-│   ├── ocr_engine.py      ✅
-│   ├── extractor.py       ✅
-│   ├── comparator.py      ✅
-│   ├── reporter.py        ✅
-│   ├── cli.py             ✅ Day 5
-│   └── main.py            (quick local testing)
-├── app/                   ← Streamlit (Day 6-7)
+│   ├── ocr_engine.py
+│   ├── extractor.py
+│   ├── comparator.py
+│   ├── reporter.py
+│   ├── cli.py
+│   └── main.py
+├── app/
+│   └── streamlit_app.py    ✅ Day 6
 └── docs/
 ```
 
@@ -71,7 +74,21 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Professional CLI (Recommended)
+### 1. Web Interface (Recommended for most users)
+
+```bash
+cd app
+streamlit run streamlit_app.py
+```
+
+Then open the local URL shown in the terminal (usually http://localhost:8501).
+
+- Upload one or more original scanned PDFs
+- Upload the compiled target PDF
+- Click **Run Accuracy Audit**
+- View results and download reports
+
+### 2. Command Line Interface
 
 ```bash
 cd src
@@ -79,45 +96,26 @@ cd src
 python cli.py --source "path/to/original_pdfs" --target "path/to/compiled.pdf"
 ```
 
-#### Full options
-
-```bash
-python cli.py \
-  --source "./original_reports" \
-  --target "./compiled_data.pdf" \
-  --output "./audit_output" \
-  --tesseract "C:\Program Files\Tesseract-OCR\tesseract.exe" \
-  --poppler "C:\poppler\Library\bin" \
-  --dpi 200 \
-  --min-value 1
-```
-
-#### View help
+Full options:
 
 ```bash
 python cli.py --help
 ```
 
-### Quick local testing
+### 3. Quick local testing
 
 ```bash
+cd src
 python main.py
 ```
-(Uses hard-coded paths — edit the file to change them.)
 
 ---
 
 ## Output
 
-After a successful run you will get:
-
 - OCR text files for each source PDF
-- `reports/SourceMatch_Audit_Report.xlsx`
-  - Summary sheet with accuracy
-  - Missing Numbers
-  - Extra Numbers
-  - Matched Numbers
-- `reports/SourceMatch_Audit_Report.txt`
+- `SourceMatch_Audit_Report.xlsx` (Summary + Missing + Extra + Matched)
+- `SourceMatch_Audit_Report.txt`
 
 ---
 
