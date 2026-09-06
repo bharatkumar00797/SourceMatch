@@ -10,7 +10,7 @@ Built for analysts, auditors, researchers, and organizations working with scanne
 
 ---
 
-## Current Status
+## Status
 
 | Day | Module | Status |
 |-----|--------|--------|
@@ -19,8 +19,8 @@ Built for analysts, auditors, researchers, and organizations working with scanne
 | 3 | Comparison Engine | ✅ Complete |
 | 4 | Professional Reporting | ✅ Complete |
 | 5 | Command-Line Interface | ✅ Complete |
-| 6 | Streamlit Web Interface | ✅ Complete (Basic) |
-| 7 | UI Polish & Improvements | Upcoming |
+| 6 | Streamlit Web Interface | ✅ Complete |
+| 7 | UI Polish & Improvements | ✅ Complete |
 | 8 | Final Documentation | Upcoming |
 
 ---
@@ -34,7 +34,7 @@ Built for analysts, auditors, researchers, and organizations working with scanne
 - Identify missing and extra values
 - Generate professional Excel + text audit reports
 - Clean command-line interface
-- **Web interface** (Streamlit)
+- Polished web interface (Streamlit)
 
 ---
 
@@ -51,7 +51,7 @@ SourceMatch/
 │   ├── cli.py
 │   └── main.py
 ├── app/
-│   └── streamlit_app.py    ✅ Day 6
+│   └── streamlit_app.py
 └── docs/
 ```
 
@@ -74,35 +74,32 @@ pip install -r requirements.txt
 
 ## Usage
 
-### 1. Web Interface (Recommended for most users)
+### Web Interface (Recommended)
 
 ```bash
 cd app
 streamlit run streamlit_app.py
 ```
 
-Then open the local URL shown in the terminal (usually http://localhost:8501).
+Open the URL shown in the terminal (usually http://localhost:8501).
 
-- Upload one or more original scanned PDFs
-- Upload the compiled target PDF
-- Click **Run Accuracy Audit**
-- View results and download reports
+1. Upload one or more original scanned PDFs
+2. Upload the compiled target PDF
+3. Click **Run Accuracy Audit**
+4. Review results and download reports
 
-### 2. Command Line Interface
+### Command Line Interface
 
 ```bash
 cd src
-
 python cli.py --source "path/to/original_pdfs" --target "path/to/compiled.pdf"
 ```
-
-Full options:
 
 ```bash
 python cli.py --help
 ```
 
-### 3. Quick local testing
+### Quick local testing
 
 ```bash
 cd src
@@ -114,7 +111,11 @@ python main.py
 ## Output
 
 - OCR text files for each source PDF
-- `SourceMatch_Audit_Report.xlsx` (Summary + Missing + Extra + Matched)
+- `SourceMatch_Audit_Report.xlsx`
+  - Summary sheet with accuracy
+  - Missing Numbers
+  - Extra Numbers
+  - Matched Numbers
 - `SourceMatch_Audit_Report.txt`
 
 ---
