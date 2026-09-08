@@ -1,52 +1,57 @@
-# SourceMatch — 8-Day Development Plan
+# SourceMatch — Development Plan
 
 ## Goal
-Build a working tool that compares original scanned PDFs against a compiled Excel/PDF and produces a clear accuracy report.
+
+Build a working tool that compares original scanned PDFs against a compiled Excel/PDF and produces a clear accuracy audit report.
 
 ---
 
-### Day 1 — Foundation
-- Finalize project structure
-- Set up OCR pipeline for multiple PDFs
-- Save intermediate OCR text files
-- Basic logging
+## 8-Day Build Cycle
 
-### Day 2 — Data Extraction
-- Robust number extraction from OCR text
-- Clean and normalize numbers
-- Handle common OCR errors (O vs 0, etc. where possible)
+| Day | Focus | Status |
+|-----|-------|--------|
+| 1 | Project setup + Multi-PDF OCR pipeline | ✅ Complete |
+| 2 | Numerical data extraction engine | ✅ Complete |
+| 3 | Comparison logic (match / missing / extra) | ✅ Complete |
+| 4 | Accuracy calculation + Excel & text reporting | ✅ Complete |
+| 5 | Professional command-line interface | ✅ Complete |
+| 6 | Streamlit web interface (basic) | ✅ Complete |
+| 7 | UI polish and usability improvements | ✅ Complete |
+| 8 | Final documentation and project polish | ✅ Complete |
 
-### Day 3 — Comparison Engine
-- Match numbers between source and target
-- Identify missing values
-- Identify extra values
-- Calculate raw match statistics
+---
 
-### Day 4 — Accuracy & Reporting
-- Official Accuracy / Match Rate formula
-- Generate Excel report
-- Generate summary text report
-- Add basic statistics (total source numbers, matched, missing, extra)
+## Architecture Overview
 
-### Day 5 — CLI Tool
-- Complete command-line interface
-- Accept folder of source PDFs + one target file
-- End-to-end run producing final reports
+```
+Source PDFs (scanned)
+        ↓
+   OCR Engine (ocr_engine.py)
+        ↓
+Number Extractor (extractor.py)
+        ↓
+   Comparator (comparator.py)  ←  Target compiled PDF
+        ↓
+   Reporter (reporter.py)
+        ↓
+ Excel + Text Audit Reports
+```
 
-### Day 6 — Web Interface (Basic)
-- Streamlit app
-- File upload for source PDFs and target file
-- Show accuracy result and summary
+---
 
-### Day 7 — Polish
-- Better UI layout
-- Download buttons for reports
-- Per-file breakdown (if time allows)
-- Error handling improvements
+## Key Design Decisions
 
-### Day 8 — Finalization
-- README polish
-- Code cleanup
-- Example usage
-- Final testing
-- GitHub presentation
+- **OCR text is cached** on disk so re-runs skip already processed files.
+- **Numbers are normalized** (commas removed, decimals standardized) before comparison.
+- **Match Rate** is always calculated against the source (original documents) as the ground truth.
+- **CLI and Web UI** share the same core modules — no duplicated logic.
+
+---
+
+## Future Improvements
+
+- Image preprocessing (deskew, contrast) before OCR
+- Per-document accuracy breakdown
+- Support for Excel (.xlsx) as target input
+- Configurable paths via a settings file
+- Multi-language OCR support
